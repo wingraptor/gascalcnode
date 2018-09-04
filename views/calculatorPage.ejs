@@ -1,0 +1,79 @@
+<% include partials/header %>
+  <section class="section section__title--top">
+    <h1 class="title">
+      BAJAN GAS PRICE CALCULATOR
+    </h1>
+    <hr>
+  </section>
+  <section class="section section__paragraph--top">
+    <div class="container">
+      <div class="content  is-size-5 is-size-6-mobile">
+        <p>
+          On July 1st 2018, the Government of Barbados implemented a new tax on fuel to essentially replace road tax. This tax is levied
+          at the rate of 40 cents a litre on both petrol and diesel, and five cents a litre on kerosene. The Government of
+          Barbados hopes to raise
+          <a href="https://www.barbadosadvocate.com/news/nsrl-road-tax-be-removed-july-1" target="_blank">$80 million per year</a>
+          from this tax compared with the $65 million brought in from the previous road tax system.
+        </p>
+        <p>
+          Whilst the previous road tax was a fixed number which depended on the vehicle type, the new fuel tax depends on how much
+          fuel you use which in turn depends on much you drive and your vehicle's fuel efficiency. The calculator will allow
+          you to get an estimate of the amount that you'll spend in fuel taxes, a comparison of totals spent pre- and post-
+          fuel tax and your fuel usages.
+        </p>
+      </div>
+    </div>
+  </section>
+  
+  <form class="form__inputs">
+    <section class="section">
+      <div class="container">
+        <div class="columns form__columns">
+          <div class="column">
+            <div class="field">
+              <label class="label is-medium">Fuel Efficiency</label>
+              <div class="control">
+                <input class="input is-medium" type="number" min="1" placeholder="Fuel Efficiency/MPG" id="fuel-efficiency" required>
+              </div>
+              <p class="help">Find your car's fuel efficiency
+                <a href="http://www.fuelly.com/car" target="_blank">here</a>
+              </p>
+            </div>
+          </div>
+          <div class="column">
+            <div class="field">
+              <label class="label is-medium">Odometer Reading</label>
+              <div class="control">
+                <input class="input is-medium" type="number" min="1" placeholder="Odom. Reading/km" id="odometer" required>
+              </div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="field">
+              <label class="label is-medium">Vehicle Age</label>
+              <div class="control">
+                <input class="input is-medium" type="number" min="1" max="50" placeholder="Age of Vehicle/years" id="age" required>
+              </div>
+            </div>
+          </div>
+          <div class="column is-narrow">
+            <label class="label is-medium">Type of Fuel</label>
+            <div class="control">
+              <div class="select is-medium">
+                <select id="fuel-type">
+                  <option>Gas</option>
+                  <option>Diesel</option>
+                </select>
+              </div>
+            </div>
+          </div>
+  
+          <div class="column is-narrow div__button">
+            <!-- Calculate Button -->
+            <button class="button is-medium button__calculate">Calculate</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </form>
+<% include partials/footer %>
