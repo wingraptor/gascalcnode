@@ -1,0 +1,51 @@
+<% include partials/header %>
+<section class="section section__title--top">
+  <h1 class="title">
+    Historical Fuel Prices
+  </h1>
+  <hr>
+</section>
+<section class="section section__paragraph--top">
+  <div class="container">
+    <div class="content  is-size-5 is-size-6-mobile">
+      <p>
+        On this page you will find historical fuel prices from July 2017 to July 2018. These are the retail (pump) prices that are
+        set by the Government of Barbados and vary depending on global oil prices.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section section__cards--fuel-history">
+  <div class="container">
+    <div class="columns">
+      <div class="column">
+        <div class="box">
+          <!-- Plotly chart will be drawn inside this DIV -->
+          <div id="gas-prices">
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="box">
+          <!-- Plotly chart will be drawn inside this DIV -->
+          <div id="diesel-prices">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<% include partials/footer %>
+
+<script>
+  // Call function that loads sweet alert on page resize; isTrue ensures that it only runs once. 
+  let isTrue = true;
+  $(window).resize(function (e) {
+    if (isTrue) {
+      screenResize();
+      isTrue = !isTrue;
+    }
+  });
+</script>
+<script src="/scripts/plotly.js"></script>
