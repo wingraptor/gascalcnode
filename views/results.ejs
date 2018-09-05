@@ -1,0 +1,173 @@
+<% include partials/header %>
+  <section class="section section__title--top">
+    <h1 class="title">
+      BAJAN GAS PRICE CALCULATOR
+    </h1>
+    <hr>
+  </section>
+  <section class="section section__paragraph--top">
+    <div class="container">
+      <div class="content  is-size-5 is-size-6-mobile">
+        <p>
+          On July 1st 2018, the Government of Barbados implemented a new tax on fuel to essentially replace road tax. This tax is levied
+          at the rate of 40 cents a litre on both petrol and diesel, and five cents a litre on kerosene. The Government of
+          Barbados hopes to raise
+          <a href="https://www.barbadosadvocate.com/news/nsrl-road-tax-be-removed-july-1" target="_blank">$80 million per
+            year
+          </a>
+          from this tax compared with the $65 million brought in from the previous road tax system.
+        </p>
+        <p>
+          Whilst the previous road tax was a fixed number which depended on the vehicle type, the new fuel tax depends on how much
+          fuel you use which in turn depends on much you drive and your vehicle's fuel efficiency. The calculator will allow
+          you to get an estimate of the amount that you'll spend in fuel taxes, a comparison of totals spent pre- and post-
+          fuel tax and your fuel usages.
+        </p>
+      </div>
+    </div>
+  </section>
+  <!--------------- Gas Calculator Cards -------------->
+  <section class="section section__cards">
+    <div class="container">
+      <div class="columns">
+
+        <!------   Taxes Card    ---- -->
+        <div class="column">
+          <div class="box">
+            <div class="content has-text-centered">
+              <p class="title">
+                Fuel Tax
+                <span class="icon is-small" id="taxes-info">
+                  <i class="fas fa-info-circle"></i>
+                </span>
+              </p>
+              <p class="section__cards--paragraph">
+                <span class="span__output" id="taxes-yearly">$<%=outputs.taxes.yearly%></span> in fuel taxes per year.
+                <br>
+                <span class="span__output" id="taxes-monthly">$<%=outputs.taxes.monthly%></span> in fuel taxes per month.
+                <br>
+                <span class="span__output" id="taxes-perKm">$<%=outputs.taxes.per100km%></span> in fuel taxes per 100km.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!------   Total Costs Card    ------>
+        <div class="column">
+          <div class="box">
+            <div class="content has-text-centered">
+              <p class="title">
+                Total Costs
+                <span class="icon is-small" id="expenses-info">
+                  <i class="fas fa-info-circle"></i>
+                </span>
+              </p>
+              <p class="section__cards--paragraph">
+                <!-- <span class="span__output" id="spend-total"></span> in fuel in total. -->
+                <span class="fuelcosts">
+                  <span class="span__output" id="spend-yearly-pre">$<%=outputs.fuelCosts.yearly%></span> in fuel/<span class="time-period">year</span>
+                  (pre-tax).
+                  <br>
+                  <span class="span__output" id="spend-yearly-post">$<%=outputs.fuelCosts.currentYearly%></span> in fuel/<span class="time-period">year</span>
+                  (post-tax).
+                </span>
+                <span class="hidden fuelcosts">
+                  <span class="span__output" id="spend-monthly-pre">$<%=outputs.fuelCosts.monthly%></span> in fuel/<span class="time-period">month</span>
+                  (pre-tax).
+                  <br>
+                  <span class="span__output" id="spend-monthly-post">$<%=outputs.fuelCosts.currentMonthly%></span> in fuel/<span class="time-period">month</span>
+                  (post-tax).
+                </span>
+              </p>
+              <button class="button" id="monthly-yearly-toggle">Monthly</button>
+            </div>
+          </div>
+        </div>
+
+        <!------   Fuel Usage Card     ------>
+        <div class="column">
+          <div class="box">
+            <div class="content has-text-centered">
+              <p class="title">
+                Total Usage
+                <span class="icon is-small" id="fuel-info">
+                  <i class="fas fa-info-circle"></i>
+                </span>
+              </p>
+              <p class="section__cards--paragraph">
+                <span class="span__output" id="fuel-total"><%=outputs.fuelUsages.total%></span> litres of fuel in total.
+                <br>
+                <span class="span__output" id="yearly-total"><%=outputs.fuelUsages.yearly%></span> litres of fuel per year.
+                <br>
+                <span class="span__output" id="monthly-total"><%=outputs.fuelUsages.monthly%></span> litres of fuel per month.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Recalculate Button -->
+    <div class="container">
+      <a class="button is-large button__recalculate" href="/gascalc/new">Calculate Again</a>
+    </div>
+  </section>
+
+
+  <!-- Modal Card That Pops Up on Click of Icon  -->
+
+  <div class="modal" id="taxes-info-modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">What do these values mean?</p>
+        <button class="delete" aria-label="close"></button>
+      </header>
+      <section class="modal-card-body">
+        <div class="content">
+          <p>These values give the
+            <strong>approximate</strong> amount that you will be paying for the fuel tax implemented in July 2018. This is
+            charged at a rate of $0.40/L. Note that VAT is not included in this calculation. </p>
+          <p>This value is calculated based on your fuel consumption which depends on your distance travelled and fuel efficiency
+            of your vehicle.
+          </p>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div class="modal" id="expenses-info-modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">What do these values mean?</p>
+        <button class="delete" aria-label="close"></button>
+      </header>
+      <section class="modal-card-body">
+        <div class="content">
+          <p>These values give the
+            <strong>approximate</strong> total amount that you have spent in given time periods.</p>
+          <p>The pre-tax period represents the amount spent before the fuel tax was implemented and uses the average price
+            of fuel over the past two years. The post-tax period represents the amount spent using the current price of fuel
+            with the fuel tax implemented</p>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div class="modal" id="fuel-info-modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">What do these values mean?</p>
+        <button class="delete" aria-label="close"></button>
+      </header>
+      <section class="modal-card-body">
+        <p>These values give the
+          <strong>approximate</strong> of fuel used over a given time period.</p>
+        <p>These values are calculated using your vehicle's fuel efficiency and the average distance driven over the specified
+          time periods.
+        </p>
+      </section>
+    </div>
+  </div>
+
+  <% include partials/footer %>

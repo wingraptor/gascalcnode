@@ -47,7 +47,7 @@ body {
 }
 
 a {
-  color: #f7741a;;
+  color: #f7741a;
   background-color: transparent;
 }
 a:hover {
@@ -108,7 +108,7 @@ a:hover {
   padding-right: 3%;
 }
 
-.section__cards {
+.hidden {
   display: none;
 }
 
@@ -176,6 +176,7 @@ hr {
   margin-left: auto;
   margin-top: 5%;
   display: block;
+  max-width: 200px;
 }
 
 .span__output {

@@ -25,7 +25,7 @@
     </div>
   </section>
   
-  <form class="form__inputs">
+  <form class="form__inputs" method="POST" action="/gascalc">
     <section class="section">
       <div class="container">
         <div class="columns form__columns">
@@ -33,7 +33,7 @@
             <div class="field">
               <label class="label is-medium">Fuel Efficiency</label>
               <div class="control">
-                <input class="input is-medium" type="number" min="1" placeholder="Fuel Efficiency/MPG" id="fuel-efficiency" required>
+                <input class="input is-medium" name="fuelEfficiency" type="number" min="1" placeholder="Fuel Efficiency/MPG" id="fuel-efficiency" required>
               </div>
               <p class="help">Find your car's fuel efficiency
                 <a href="http://www.fuelly.com/car" target="_blank">here</a>
@@ -44,7 +44,7 @@
             <div class="field">
               <label class="label is-medium">Odometer Reading</label>
               <div class="control">
-                <input class="input is-medium" type="number" min="1" placeholder="Odom. Reading/km" id="odometer" required>
+                <input class="input is-medium" name="odometerReading"type="number" min="1" placeholder="Odom. Reading/km" id="odometer" required>
               </div>
             </div>
           </div>
@@ -52,7 +52,7 @@
             <div class="field">
               <label class="label is-medium">Vehicle Age</label>
               <div class="control">
-                <input class="input is-medium" type="number" min="1" max="50" placeholder="Age of Vehicle/years" id="age" required>
+                <input class="input is-medium" name="vehicleAge" type="number" min="1" max="50" placeholder="Age of Vehicle/years" id="age" required>
               </div>
             </div>
           </div>
@@ -60,7 +60,7 @@
             <label class="label is-medium">Type of Fuel</label>
             <div class="control">
               <div class="select is-medium">
-                <select id="fuel-type">
+                <select id="fuel-type" name="fuelType">
                   <option>Gas</option>
                   <option>Diesel</option>
                 </select>
