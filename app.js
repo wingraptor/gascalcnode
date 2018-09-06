@@ -1,7 +1,9 @@
-var bodyParser = require("body-parser"),
-  express = require("express");
+var bodyParser   = require("body-parser"),
+    mongoose     = require("mongoose"),
+    express      = require("express");
 
 var app = express();
+mongoose.connect("mongodb://localhost:27017/gascalc_app", { useNewUrlParser: true });
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -104,7 +106,7 @@ const currentPetrolFuelRate = 3.96;
 const currentDieselFuelRate = 3.21;
 
 // Calculates average rates of petrol from June 2016 to June 2018
-function avgPetrolFuelRates(fuelRate) {
+function avgFuelRate(fuelRate) {
   let sum = fuelRate[0];
   for (var i = 1; i < fuelRate.length; i++) {
     sum += fuelRate[i];
@@ -113,38 +115,38 @@ function avgPetrolFuelRates(fuelRate) {
 }
 
 // Calculates average rates of diesel from June 2016 to June 2018
-function avgDieselFuelRates(fuelRate) {
-  let sum = fuelRate[0];
-  for (var i = 1; i < fuelRate.length; i++) {
-    sum += fuelRate[i];
-  }
-  return sum / fuelRate.length;
-}
+// function avgDieselFuelRates(fuelRate) {
+//   let sum = fuelRate[0];
+//   for (var i = 1; i < fuelRate.length; i++) {
+//     sum += fuelRate[i];
+//   }
+//   return sum / fuelRate.length;
+// }
 
 // Calculates total fuel costs using average fuel price June 2016 to June 2018
 function totalFuelCosts() {
   if (userInputs[0].fuelType === "Gas") {
-    return (totalFuelUsed() * avgPetrolFuelRates(petrolFuelRate)).toFixed(2);
+    return (totalFuelUsed() * avgFuelRate(petrolFuelRate)).toFixed(2);
   } else {
-    return (totalFuelUsed() * avgDieselFuelRates(dieselFuelRate)).toFixed(2);
+    return (totalFuelUsed() * avgFuelRate(dieselFuelRate)).toFixed(2);
   }
 }
 
 // Calculates yearly fuel costs using average fuel price from June 2016 to June 2018
 function yearlyFuelCosts() {
   if (userInputs[0].fuelType === "Gas") {
-    return (yearlyFuelUsage() * avgPetrolFuelRates(petrolFuelRate)).toFixed(2);
+    return (yearlyFuelUsage() * avgFuelRate(petrolFuelRate)).toFixed(2);
   } else {
-    return (yearlyFuelUsage() * avgDieselFuelRates(dieselFuelRate)).toFixed(2);
+    return (yearlyFuelUsage() * avgFuelRate(dieselFuelRate)).toFixed(2);
   }
 }
 
 // Calculates monthly fuel costs using average fuel price from June 2016 to June 2018
 function monthlyFuelCosts() {
   if (userInputs[0].fuelType === "Gas") {
-    return (monthlyFuelUsage() * avgPetrolFuelRates(petrolFuelRate)).toFixed(2);
+    return (monthlyFuelUsage() * avgFuelRate(petrolFuelRate)).toFixed(2);
   } else {
-    return (monthlyFuelUsage() * avgDieselFuelRates(dieselFuelRate)).toFixed(2);
+    return (monthlyFuelUsage() * avgFuelRate(dieselFuelRate)).toFixed(2);
   }
 }
 
