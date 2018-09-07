@@ -1,4 +1,4 @@
-var HistoricPrice = require("./models/historicprices");
+var HistoricPrice = require("./models/historicprices"),
     bodyParser   = require("body-parser"),
     mongoose     = require("mongoose"),
     express      = require("express");
