@@ -135,8 +135,6 @@ const currentDieselFuelRate = 3.21;
 //   }
 // });
 
-TESTTTTT
-
 // Calculates average rates of petrol from June 2016 to June 2018
 function avgFuelRate(fuelRate) {
   let sum = fuelRate[0];
