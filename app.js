@@ -127,14 +127,16 @@ const dieselFuelRate = [
 const currentPetrolFuelRate = 3.96;
 const currentDieselFuelRate = 3.21;
 
-// HistoricPrice.find({}, function(err, historicalPrice){
-//   if(err){
-//     console.log("Error");
-//   } else {
-//     console.log(historicalPrice);
-//   }
-// });
+// function test() {
+//   HistoricPrice.findById("5b91b89be79a521e80718787").exec(function (err, collection) {
+//     if (userInputs[0].fuelType === "Gas") {
+//       yearlyFuelCosts(collection.petrol);
+//     } else {
+//       yearlyFuelCosts(collection.diesel);
+//     }
 
+//   });
+// }
 
 // Calculates average rates of petrol from June 2016 to June 2018
 function avgFuelRate(fuelRate) {
@@ -155,12 +157,8 @@ function totalFuelCosts() {
 }
 
 // Calculates yearly fuel costs using average fuel price from June 2016 to June 2018
-function yearlyFuelCosts() {
-  if (userInputs[0].fuelType === "Gas") {
-    return (yearlyFuelUsage() * avgFuelRate(petrolFuelRate)).toFixed(2);
-  } else {
-    return (yearlyFuelUsage() * avgFuelRate(dieselFuelRate)).toFixed(2);
-  }
+function yearlyFuelCosts(historicFuelPrices) {
+  return (yearlyFuelUsage() * avgFuelRate(historicFuelPrices)).toFixed(2);
 }
 
 // Calculates monthly fuel costs using average fuel price from June 2016 to June 2018
