@@ -1,4 +1,5 @@
-var bodyParser   = require("body-parser"),
+var HistoricPrice = require("./models/historicprices");
+    bodyParser   = require("body-parser"),
     mongoose     = require("mongoose"),
     express      = require("express");
 
@@ -15,6 +16,27 @@ var Outputs = function (taxOutputs, fuelCostOutputs, fuelUsageOutputs){
   this.fuelCosts = fuelCostOutputs,
   this.fuelUsages = fuelUsageOutputs
 };
+
+
+//==================
+// DATABASE CREATION
+//==================
+
+// HistoricPrice.create({
+//   petrol: [2.85, 2.93, 2.85, 2.82, 2.91, 2.84, 2.91, 2.78, 2.98, 2.96, 2.97,
+//     3, 3.18, 2.94, 3.16, 3.25, 3.38, 3.19, 3.27, 3.35, 3.29, 3.44, 3.31,
+//     3.40, 3.60],
+//   diesel: [1.99, 2.07, 2.04, 1.95, 2.09, 2.07, 2.12, 2.15, 2.17, 2.21, 2.28,
+//     2.15, 2.13, 2.37, 2.35, 2.46, 2.37, 2.52, 2.58, 2.63, 2.60, 2.60,
+//     2.61, 2.80]
+// }, function(err,historicPrices){
+//   if(err){
+//     console.log(err);
+//   } else {
+//     console.log(historicPrice);
+//   }
+// });
+
 
 
 //==============
@@ -105,6 +127,15 @@ const dieselFuelRate = [
 const currentPetrolFuelRate = 3.96;
 const currentDieselFuelRate = 3.21;
 
+// HistoricPrice.find({}, function(err, historicalPrice){
+//   if(err){
+//     console.log("Error");
+//   } else {
+//     console.log(historicalPrice);
+//   }
+// });
+
+
 // Calculates average rates of petrol from June 2016 to June 2018
 function avgFuelRate(fuelRate) {
   let sum = fuelRate[0];
@@ -113,15 +144,6 @@ function avgFuelRate(fuelRate) {
   }
   return sum / fuelRate.length;
 }
-
-// Calculates average rates of diesel from June 2016 to June 2018
-// function avgDieselFuelRates(fuelRate) {
-//   let sum = fuelRate[0];
-//   for (var i = 1; i < fuelRate.length; i++) {
-//     sum += fuelRate[i];
-//   }
-//   return sum / fuelRate.length;
-// }
 
 // Calculates total fuel costs using average fuel price June 2016 to June 2018
 function totalFuelCosts() {
