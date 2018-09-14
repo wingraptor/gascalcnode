@@ -1,4 +1,4 @@
-var HistoricPrice = require("./models/historicprices"),
+var Pretaxprice  = require("./models/pretaxprices"),
     bodyParser   = require("body-parser"),
     mongoose     = require("mongoose"),
     express      = require("express");
@@ -11,29 +11,31 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
 
 var userInputs = [];
-var Outputs = function (taxOutputs, fuelCostOutputs, fuelUsageOutputs){
+
+//Constructor for outputs from calculation functions
+function Outputs (taxOutputs, fuelCostOutputs, fuelUsageOutputs){
   this.taxes = taxOutputs,
   this.fuelCosts = fuelCostOutputs,
   this.fuelUsages = fuelUsageOutputs
-};
+}
 
 
 //==================
 // DATABASE CREATION
 //==================
 
-// HistoricPrice.create({
+// Pretaxprice.create({
 //   petrol: [2.85, 2.93, 2.85, 2.82, 2.91, 2.84, 2.91, 2.78, 2.98, 2.96, 2.97,
 //     3, 3.18, 2.94, 3.16, 3.25, 3.38, 3.19, 3.27, 3.35, 3.29, 3.44, 3.31,
 //     3.40, 3.60],
 //   diesel: [1.99, 2.07, 2.04, 1.95, 2.09, 2.07, 2.12, 2.15, 2.17, 2.21, 2.28,
 //     2.15, 2.13, 2.37, 2.35, 2.46, 2.37, 2.52, 2.58, 2.63, 2.60, 2.60,
 //     2.61, 2.80]
-// }, function(err,historicPrices){
+// }, function(err,Pretaxprices){
 //   if(err){
 //     console.log(err);
 //   } else {
-//     console.log(historicPrice);
+//     console.log(Pretaxprices);
 //   }
 // });
 
@@ -73,23 +75,25 @@ app.post("/gascalc", function(req, res) {
 
 //SHOW ROUTE - Calculator Results Page
 app.get("/gascalc/results", function(req,res){
-  let taxes = {
+  // Group outputs from calculation functions in 3 different objects
+  let taxOutputs = {
     yearly: yearlyFuelTaxes(),
     monthly: monthlyFuelTaxes(),
     per100km: taxesPer100Km()
-  }
-  let fuelCosts = {
+  },
+    fuelCostOutputs = {
     yearly: yearlyFuelCosts(),
     monthly: monthlyFuelCosts(),
     currentYearly: currentYearlyFuelCosts(),
     currentMonthly: currentMonthlyFuelCosts()
-  }
-  let fuelUsages = {
+  },
+    fuelUsageOutputs = {
     total: totalFuelUsed(),
     monthly: monthlyFuelUsage(),
     yearly: yearlyFuelUsage()
   }
-  let outputs = new Outputs(taxes, fuelCosts, fuelUsages);
+
+  let outputs = new Outputs(taxOutputs, fuelCostOutputs, fuelUsageOutputs); //Create object from the 3 grouped output objects declared above
   res.render("results", { userInputs: userInputs, outputs: outputs});
 });
 
@@ -126,14 +130,6 @@ const dieselFuelRate = [
 // Fuel Rates From Most Recent Month
 const currentPetrolFuelRate = 3.96;
 const currentDieselFuelRate = 3.21;
-
-// HistoricPrice.find({}, function(err, historicalPrice){
-//   if(err){
-//     console.log("Error");
-//   } else {
-//     console.log(historicalPrice);
-//   }
-// });
 
 // Calculates average rates of petrol from June 2016 to June 2018
 function avgFuelRate(fuelRate) {
