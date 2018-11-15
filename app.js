@@ -184,7 +184,7 @@ function avgFuelRate(fuelRate) {
   return sum / fuelRate.length;
 }
 
-// Calculates fuel costs
+// Calculates various fuel costs
 function fuelCalculator(calcFunc, fuelrate) {
   // Calculations for gas fueltype
   if (userInputs[0].fuelType === "Gas") {
@@ -204,51 +204,6 @@ function fuelCalculator(calcFunc, fuelrate) {
   }
 }
 
-// Calculates total fuel costs using average fuel price June 2016 to June 2018
-// function totalFuelCosts() {
-//   if (userInputs[0].fuelType === "Gas") {
-//     return (totalFuelUsed() * avgFuelRate(petrolFuelRate)).toFixed(2);
-//   } else {
-//     return (totalFuelUsed() * avgFuelRate(dieselFuelRate)).toFixed(2);
-//   }
-// }
-
-// Calculates yearly fuel costs using average fuel price from June 2016 to June 2018
-function yearlyFuelCosts() {
-  if (userInputs[0].fuelType === "Gas") {
-    return (yearlyFuelUsage() * avgFuelRate(petrolFuelRate)).toFixed(2);
-  } else {
-    return (yearlyFuelUsage() * avgFuelRate(dieselFuelRate)).toFixed(2);
-  }
-}
-
-// Calculates monthly fuel costs using average fuel price from June 2016 to June 2018
-// function monthlyFuelCosts() {
-//   if (userInputs[0].fuelType === "Gas") {
-//     return (monthlyFuelUsage() * avgFuelRate(petrolFuelRate)).toFixed(2);
-//   } else {
-//     return (monthlyFuelUsage() * avgFuelRate(dieselFuelRate)).toFixed(2);
-//   }
-// }
-
-// // Calculates yearly fuel costs using fuel price from most recent month.
-// function currentYearlyFuelCosts() {
-//   if (userInputs[0].fuelType === "Gas") {
-//     return (yearlyFuelUsage() * currentPetrolFuelRate).toFixed(2);
-//   } else {
-//     return (yearlyFuelUsage() * currentDieselFuelRate).toFixed(2);
-//   }
-// }
-
-// // Calculates monthly fuel costs using fuel price from most recent month.
-// function currentMonthlyFuelCosts() {
-//   if (userInputs[0].fuelType === "Gas") {
-//     return (monthlyFuelUsage() * currentPetrolFuelRate).toFixed(2);
-//   } else {
-//     return (monthlyFuelUsage() * currentDieselFuelRate).toFixed(2);
-//   }
-// }
-
 //Converts mpg to km/l
 function mileageConverter() {
   return userInputs[0].fuelEfficiency * conversionMultiplier;
@@ -256,8 +211,7 @@ function mileageConverter() {
 
 // Calculates Total Amount of Fuel Used by Vehicle
 function totalFuelUsed() {
-  let kmPerLitre = mileageConverter();
-  return (userInputs[0].odometerReading / kmPerLitre).toFixed();
+  return (userInputs[0].odometerReading / mileageConverter()).toFixed();
 }
 
 // Calculates Average Fuel Used Per Year
