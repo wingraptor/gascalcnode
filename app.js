@@ -116,7 +116,7 @@ const newTaxRate = 0.4;
 //value to convert from mpg to kpl
 const conversionMultiplier = 0.425144;
 
-//Fuel Rates From June 2016 Until June 2018
+//Fuel Rates From June 2016 Until November 2018
 const petrolFuelRate = [
   2.85,
   2.93,
@@ -142,8 +142,14 @@ const petrolFuelRate = [
   3.44,
   3.31,
   3.4,
-  3.6
+  3.6,
+  3.96,
+  3.88,
+  3.91,
+  3.89,
+  3.91
 ];
+
 const dieselFuelRate = [
   1.99,
   2.07,
@@ -168,20 +174,26 @@ const dieselFuelRate = [
   2.6,
   2.6,
   2.61,
-  2.8
+  2.8,
+  3.21,
+  3.15,
+  3.14,
+  3.2,
+  3.2
 ];
 
-// Fuel Rates From Most Recent Month
-const currentPetrolFuelRate = 3.96;
-const currentDieselFuelRate = 3.21;
+// Fuel Rates From Most Recent Month - added as global variable in app so it is accessible in header.ejs
+app.locals.currentPetrolFuelRate = petrolFuelRate[petrolFuelRate.length - 1];
+app.locals.currentDieselFuelRate = dieselFuelRate[dieselFuelRate.length - 1];
+
 
 // Calculates average rates of petrol from June 2016 to June 2018
 function avgFuelRate(fuelRate) {
   let sum = fuelRate[0];
-  for (var i = 1; i < fuelRate.length; i++) {
+  for (var i = 1; i < 25; i++) {
     sum += fuelRate[i];
   }
-  return sum / fuelRate.length;
+  return sum / 25;
 }
 
 // Calculates various fuel costs
@@ -190,14 +202,14 @@ function fuelCalculator(calcFunc, fuelrate) {
   if (userInputs[0].fuelType === "Gas") {
     //calculations using current fuel prices(post-tax)
     if (fuelrate === "current") {
-      return (calcFunc() * currentPetrolFuelRate).toFixed(2);
+      return (calcFunc() * app.locals.currentPetrolFuelRate).toFixed(2);
     } else {
       //calculations for monthly and yearly petrol fuel rates(pre-tax)
       return (calcFunc() * fuelrate(petrolFuelRate)).toFixed(2);
     }
     //calculations using current diesel prices(post-tax)
   } else if (fuelrate === "current") {
-    return (calcFunc() * currentDieselFuelRate).toFixed(2);
+    return (calcFunc() * app.locals.currentDieselFuelRate).toFixed(2);
   } else {
     //calculations for monthly and yearly diel fuel rates (pre-tax)
     return (calcFunc() * fuelrate(dieselFuelRate)).toFixed(2);
