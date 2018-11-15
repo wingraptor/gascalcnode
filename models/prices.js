@@ -1,22 +1,22 @@
-var mongoose = require("mongoose");
+// var mongoose = require("mongoose");
 
-var PricesSchema = new mongoose.Schema({
-  petrol: {
-    year: {
-      2018: {
-        Jan: Number,
-        Feb: Number
-      }
-    }
-  },
-  diesel: {
-    year: {
-      2018: {
-        Jan: Number,
-        Feb: Number
-      }
-    }
-  }
-});
+// var PricesSchema = new mongoose.Schema({
+//   petrol: {
+//     year: {
+//       2018: {
+//         Jan: Number,
+//         Feb: Number
+//       }
+//     }
+//   },
+//   diesel: {
+//     year: {
+//       2018: {
+//         Jan: Number,
+//         Feb: Number
+//       }
+//     }
+//   }
+// });
 
-module.exports = mongoose.model("Price", PricesSchema);
+// module.exports = mongoose.model("Price", PricesSchema);
