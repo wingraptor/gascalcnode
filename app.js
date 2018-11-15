@@ -1,13 +1,13 @@
 var Pretaxprice = require("./models/pretaxprices"),
   bodyParser = require("body-parser"),
-  mongoose = require("mongoose"),
+  // mongoose = require("mongoose"),
   express = require("express");
 
 var app = express();
-mongoose.connect(
-  "mongodb://localhost:27017/gascalc_app",
-  { useNewUrlParser: true }
-);
+// mongoose.connect(
+//   "mongodb://localhost:27017/gascalc_app",
+//   { useNewUrlParser: true }
+// );
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
