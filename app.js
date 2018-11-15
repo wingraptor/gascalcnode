@@ -63,9 +63,9 @@ app.post("/gascalc", function(req, res) {
     fuelType = req.body.fuelType;
 
   var newUserInputs = {
-    fuelEfficiency: Number(fuelEfficiency),
-    odometerReading: Number(odometerReading),
-    vehicleAge: Number(vehicleAge),
+  fuelEfficiency: parseFloat(fuelEfficiency),
+  odometerReading: parseFloat(odometerReading),
+  vehicleAge: parseFloat(vehicleAge),
     fuelType: fuelType
   };
 
