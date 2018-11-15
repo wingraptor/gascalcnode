@@ -1,10 +1,13 @@
-var Pretaxprice  = require("./models/pretaxprices"),
-    bodyParser   = require("body-parser"),
-    mongoose     = require("mongoose"),
-    express      = require("express");
+var Pretaxprice = require("./models/pretaxprices"),
+  bodyParser = require("body-parser"),
+  mongoose = require("mongoose"),
+  express = require("express");
 
 var app = express();
-mongoose.connect("mongodb://localhost:27017/gascalc_app", { useNewUrlParser: true });
+mongoose.connect(
+  "mongodb://localhost:27017/gascalc_app",
+  { useNewUrlParser: true }
+);
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -13,12 +16,11 @@ app.use(express.static(__dirname + "/public"));
 var userInputs = [];
 
 //Constructor for outputs from calculation functions
-function Outputs (taxOutputs, fuelCostOutputs, fuelUsageOutputs){
-  this.taxes = taxOutputs,
-  this.fuelCosts = fuelCostOutputs,
-  this.fuelUsages = fuelUsageOutputs
+function Outputs(taxOutputs, fuelCostOutputs, fuelUsageOutputs) {
+  (this.taxes = taxOutputs),
+    (this.fuelCosts = fuelCostOutputs),
+    (this.fuelUsages = fuelUsageOutputs);
 }
-
 
 //==================
 // DATABASE CREATION
@@ -39,8 +41,6 @@ function Outputs (taxOutputs, fuelCostOutputs, fuelUsageOutputs){
 //   }
 // });
 
-
-
 //==============
 // ROUTES CONFIG
 //==============
@@ -52,21 +52,19 @@ app.get("/", function(req, res) {
 
 //NEW ROUTE - Calculator Page
 app.get("/gascalc/new", function(req, res) {
+  // Set length array of userinputs to 0; clear user array
+  userInputs = [];
   res.render("calculatorPage");
 });
 
 //CREATE ROUTE - Calculator Page
 app.post("/gascalc", function(req, res) {
-  var fuelEfficiency = req.body.fuelEfficiency,
-    odometerReading = req.body.odometerReading,
-    vehicleAge = req.body.vehicleAge,
-    fuelType = req.body.fuelType;
-
+  // Capture and store user inputs
   var newUserInputs = {
-  fuelEfficiency: parseFloat(fuelEfficiency),
-  odometerReading: parseFloat(odometerReading),
-  vehicleAge: parseFloat(vehicleAge),
-    fuelType: fuelType
+    fuelEfficiency: parseFloat(req.body.fuelEfficiency),
+    odometerReading: parseFloat(req.body.odometerReading),
+    vehicleAge: parseFloat(req.body.vehicleAge),
+    fuelType: req.body.fuelType
   };
 
   userInputs.push(newUserInputs);
@@ -74,27 +72,30 @@ app.post("/gascalc", function(req, res) {
 });
 
 //SHOW ROUTE - Calculator Results Page
-app.get("/gascalc/results", function(req,res){
+app.get("/gascalc/results", function(req, res) {
   // Group outputs from calculation functions in 3 different objects
   let taxOutputs = {
-    yearly: yearlyFuelTaxes(),
-    monthly: monthlyFuelTaxes(),
-    per100km: taxesPer100Km()
-  },
+      yearly: yearlyFuelTaxes(),
+      monthly: monthlyFuelTaxes(),
+      per100km: taxesPer100Km()
+    },
     fuelCostOutputs = {
-    yearly: yearlyFuelCosts(),
-    monthly: monthlyFuelCosts(),
-    currentYearly: currentYearlyFuelCosts(),
-    currentMonthly: currentMonthlyFuelCosts()
-  },
+      yearly: fuelCalculator(yearlyFuelUsage, avgFuelRate),
+      monthly: fuelCalculator(monthlyFuelUsage, avgFuelRate),
+      currentYearly: fuelCalculator(yearlyFuelUsage, "current"),
+      currentMonthly: fuelCalculator(monthlyFuelUsage, "current")
+    },
     fuelUsageOutputs = {
-    total: totalFuelUsed(),
-    monthly: monthlyFuelUsage(),
-    yearly: yearlyFuelUsage()
-  }
+      total: totalFuelUsed(),
+      monthly: monthlyFuelUsage(),
+      yearly: yearlyFuelUsage()
+    };
 
-  let outputs = new Outputs(taxOutputs, fuelCostOutputs, fuelUsageOutputs); //Create object from the 3 grouped output objects declared above
-  res.render("results", { userInputs: userInputs, outputs: outputs});
+  //Create object from the 3 grouped output objects declared above
+  let outputs = new Outputs(taxOutputs, fuelCostOutputs, fuelUsageOutputs);
+
+  //Render results page and pass in outputs and userinputs
+  res.render("results", { userInputs: userInputs, outputs: outputs });
 });
 
 //HISTORICAL PRICES PAGE
@@ -110,22 +111,65 @@ app.get("/tips", function(req, res) {
 //====================
 //CALCULATION LOGIC
 //====================
-const newTaxRate = 0.40;
+const newTaxRate = 0.4;
 
 //value to convert from mpg to kpl
 const conversionMultiplier = 0.425144;
 
 //Fuel Rates From June 2016 Until June 2018
 const petrolFuelRate = [
-  2.85, 2.93, 2.85, 2.82, 2.91, 2.84, 2.91, 2.78, 2.98, 2.96, 2.97,
-  3, 3.18, 2.94, 3.16, 3.25, 3.38, 3.19, 3.27, 3.35, 3.29, 3.44, 3.31,
-  3.40, 3.60
-]
+  2.85,
+  2.93,
+  2.85,
+  2.82,
+  2.91,
+  2.84,
+  2.91,
+  2.78,
+  2.98,
+  2.96,
+  2.97,
+  3,
+  3.18,
+  2.94,
+  3.16,
+  3.25,
+  3.38,
+  3.19,
+  3.27,
+  3.35,
+  3.29,
+  3.44,
+  3.31,
+  3.4,
+  3.6
+];
 const dieselFuelRate = [
-  1.99, 2.07, 2.04, 1.95, 2.09, 2.07, 2.12, 2.15, 2.17, 2.21, 2.28,
-  2.15, 2.13, 2.37, 2.35, 2.46, 2.37, 2.52, 2.58, 2.63, 2.60, 2.60,
-  2.61, 2.80
-]
+  1.99,
+  2.07,
+  2.04,
+  1.95,
+  2.09,
+  2.07,
+  2.12,
+  2.15,
+  2.17,
+  2.21,
+  2.28,
+  2.15,
+  2.13,
+  2.37,
+  2.35,
+  2.46,
+  2.37,
+  2.52,
+  2.58,
+  2.63,
+  2.6,
+  2.6,
+  2.61,
+  2.8
+];
 
 // Fuel Rates From Most Recent Month
 const currentPetrolFuelRate = 3.96;
@@ -140,14 +184,34 @@ function avgFuelRate(fuelRate) {
   return sum / fuelRate.length;
 }
 
-// Calculates total fuel costs using average fuel price June 2016 to June 2018
-function totalFuelCosts() {
+// Calculates fuel costs
+function fuelCalculator(calcFunc, fuelrate) {
+  // Calculations for gas fueltype
   if (userInputs[0].fuelType === "Gas") {
-    return (totalFuelUsed() * avgFuelRate(petrolFuelRate)).toFixed(2);
+    //calculations using current fuel prices(post-tax)
+    if (fuelrate === "current") {
+      return (calcFunc() * currentPetrolFuelRate).toFixed(2);
+    } else {
+      //calculations for monthly and yearly petrol fuel rates(pre-tax)
+      return (calcFunc() * fuelrate(petrolFuelRate)).toFixed(2);
+    }
+    //calculations using current diesel prices(post-tax)
+  } else if (fuelrate === "current") {
+    return (calcFunc() * currentDieselFuelRate).toFixed(2);
   } else {
-    return (totalFuelUsed() * avgFuelRate(dieselFuelRate)).toFixed(2);
+    //calculations for monthly and yearly diel fuel rates (pre-tax)
+    return (calcFunc() * fuelrate(dieselFuelRate)).toFixed(2);
   }
 }
+
+// Calculates total fuel costs using average fuel price June 2016 to June 2018
+// function totalFuelCosts() {
+//   if (userInputs[0].fuelType === "Gas") {
+//     return (totalFuelUsed() * avgFuelRate(petrolFuelRate)).toFixed(2);
+//   } else {
+//     return (totalFuelUsed() * avgFuelRate(dieselFuelRate)).toFixed(2);
+//   }
+// }
 
 // Calculates yearly fuel costs using average fuel price from June 2016 to June 2018
 function yearlyFuelCosts() {
@@ -159,31 +223,31 @@ function yearlyFuelCosts() {
 }
 
 // Calculates monthly fuel costs using average fuel price from June 2016 to June 2018
-function monthlyFuelCosts() {
-  if (userInputs[0].fuelType === "Gas") {
-    return (monthlyFuelUsage() * avgFuelRate(petrolFuelRate)).toFixed(2);
-  } else {
-    return (monthlyFuelUsage() * avgFuelRate(dieselFuelRate)).toFixed(2);
-  }
-}
+// function monthlyFuelCosts() {
+//   if (userInputs[0].fuelType === "Gas") {
+//     return (monthlyFuelUsage() * avgFuelRate(petrolFuelRate)).toFixed(2);
+//   } else {
+//     return (monthlyFuelUsage() * avgFuelRate(dieselFuelRate)).toFixed(2);
+//   }
+// }
 
-// Calculates yearly fuel costs using fuel price from most recent month.
-function currentYearlyFuelCosts() {
-  if (userInputs[0].fuelType === "Gas") {
-    return (yearlyFuelUsage() * currentPetrolFuelRate).toFixed(2);
-  } else {
-    return (yearlyFuelUsage() * currentDieselFuelRate).toFixed(2);
-  }
-}
+// // Calculates yearly fuel costs using fuel price from most recent month.
+// function currentYearlyFuelCosts() {
+//   if (userInputs[0].fuelType === "Gas") {
+//     return (yearlyFuelUsage() * currentPetrolFuelRate).toFixed(2);
+//   } else {
+//     return (yearlyFuelUsage() * currentDieselFuelRate).toFixed(2);
+//   }
+// }
 
-// Calculates monthly fuel costs using fuel price from most recent month.
-function currentMonthlyFuelCosts() {
-  if (userInputs[0].fuelType === "Gas") {
-    return (monthlyFuelUsage() * currentPetrolFuelRate).toFixed(2);
-  } else {
-    return (monthlyFuelUsage() * currentDieselFuelRate).toFixed(2);
-  }
-}
+// // Calculates monthly fuel costs using fuel price from most recent month.
+// function currentMonthlyFuelCosts() {
+//   if (userInputs[0].fuelType === "Gas") {
+//     return (monthlyFuelUsage() * currentPetrolFuelRate).toFixed(2);
+//   } else {
+//     return (monthlyFuelUsage() * currentDieselFuelRate).toFixed(2);
+//   }
+// }
 
 //Converts mpg to km/l
 function mileageConverter() {
@@ -218,7 +282,7 @@ function monthlyFuelTaxes() {
 
 //Calculates amount paid in taxes per 100km
 function taxesPer100Km() {
-  return (newTaxRate / mileageConverter() * 100).toFixed(2);
+  return ((newTaxRate / mileageConverter()) * 100).toFixed(2);
 }
 
 // Tell Express to listen for requests on port 3000 (starts server)
