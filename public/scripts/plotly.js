@@ -10,10 +10,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 // Gas Prices
 var trace1 = {
-  x: ["Jul'17", "Aug'17", "Sept'17", "Oct'17", "Nov'17", "Dec'17", "Jan'18", "Feb'18", "Mar'18", "Apr'18",
-    "May'18", "Jun'18", "Jul'18"],
-  y: [2.94, 3.16, 3.25, 3.38, 3.19, 3.27, 3.35, 3.29, 3.44, 3.31,
-    3.40, 3.60, 3.96
+  x: ["Nov'17", "Dec'17", "Jan'18", "Feb'18", "Mar'18", "Apr'18",
+    "May'18", "Jun'18", "Jul'18", "Aug'18", "Sep'18", "Oct'18", "Nov'18"],
+  y: [3.19, 3.27, 3.35, 3.29, 3.44, 3.31,
+    3.40, 3.60, 3.96, 3.88, 3.91, 3.89, 3.91
   ],
   type: 'scatter'
 };
@@ -22,45 +22,45 @@ var layout1 = {
   title: "Historical Gas Prices",
   autosize: true,
   xaxis: {
-    title: ''
+    title: ""
   },
   yaxis: {
     title: "Bds $/litre"
   },
   annotations: [
     {
-      x: "Jul'17",
-      y: 2.94,
-      xref: 'x',
-      yref: 'y',
-      text: '$2.94',
+      x: trace1.x[0],
+      y: trace1.y[0],
+      xref: "x",
+      yref: "y",
+      text: "$" + trace1.y[0].toFixed(2),
       showarrow: true,
       arrowhead: 5,
       ax: 0,
       ay: -40
     },
     {
-      x: "Jan'18",
-      y: 3.35,
-      xref: 'x',
-      yref: 'y',
-      text: '$3.35',
+      x: trace1.x[6],
+      y: trace1.y[6],
+      xref: "x",
+      yref: "y",
+      text: "$" + trace1.y[6].toFixed(2),
       showarrow: true,
       arrowhead: 5,
       ax: 0,
       ay: -40
     },
     {
-      x: "Jul'18",
-      y: 3.96,
-      xref: 'x',
-      yref: 'y',
-      text: '$3.96',
+      x: trace1.x[trace1.x.length - 1],
+      y: trace1.y[trace1.y.length - 1],
+      xref: "x",
+      yref: "y",
+      text: "$" + trace1.y[trace1.y.length - 1].toFixed(2),
       showarrow: true,
       arrowhead: 5,
       ax: 0,
       ay: -40
-    },
+    }
   ]
 };
 
@@ -68,10 +68,10 @@ var data = [trace1];
 
 //  Diesel Prices
 var trace2 = {
-  x: ["Jul'17", "Aug'17", "Sept'17", "Oct'17", "Nov'17", "Dec'17", "Jan'18", "Feb'18", "Mar'18",
-    "Apr'18", "May'18", "Jun'18", "Jul'18"],
-  y: [2.13, 2.37, 2.35, 2.46, 2.37, 2.52, 2.58, 2.63, 2.60, 2.60,
-    2.61, 2.80, 3.21],
+  x: ["Nov'17", "Dec'17", "Jan'18", "Feb'18", "Mar'18", "Apr'18",
+    "May'18", "Jun'18", "Jul'18", "Aug'18", "Sep'18", "Oct'18", "Nov'18"],
+  y: [2.37, 2.52, 2.58, 2.63, 2.60, 2.60,
+    2.61, 2.80, 3.21, 3.15, 3.14, 3.20, 3.20],
   type: 'scatter'
 };
 
@@ -79,45 +79,45 @@ var layout2 = {
   title: "Historical Diesel Prices",
   autosize: true,
   xaxis: {
-    title: ''
+    title: ""
   },
   yaxis: {
-    title: 'Bds $/litre'
+    title: "Bds $/litre"
   },
   annotations: [
     {
-      x: "Jul'17",
-      y: 2.15,
-      xref: 'x',
-      yref: 'y',
-      text: '$2.15',
+      x: trace2.x[0],
+      y: trace2.y[0],
+      xref: "x",
+      yref: "y",
+      text: "$" + trace2.y[0].toFixed(2),
       showarrow: true,
       arrowhead: 5,
       ax: 0,
       ay: -40
     },
     {
-      x: "Jan'18",
-      y: 2.58,
-      xref: 'x',
-      yref: 'y',
-      text: '$2.58',
+      x: trace2.x[6],
+      y: trace2.y[6],
+      xref: "x",
+      yref: "y",
+      text: "$" + trace2.y[6].toFixed(2),
       showarrow: true,
       arrowhead: 5,
       ax: 0,
       ay: -40
     },
     {
-      x: "Jul'18",
-      y: 3.21,
-      xref: 'x',
-      yref: 'y',
-      text: '$3.21',
+      x: trace2.x[trace2.x.length - 1],
+      y: trace2.y[trace2.y.length - 1],
+      xref: "x",
+      yref: "y",
+      text: "$" + trace2.y[trace2.y.length - 1].toFixed(2),
       showarrow: true,
       arrowhead: 5,
       ax: 0,
       ay: -40
-    },
+    }
   ]
 };
 var data2 = [trace2];
