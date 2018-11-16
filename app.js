@@ -15,6 +15,9 @@ app.use(express.static(__dirname + "/public"));
 
 var userInputs = [];
 
+var port = process.env.PORT || 3000;
+var IP = process.env.IP ||"";
+
 //Constructor for outputs from calculation functions
 function Outputs(taxOutputs, fuelCostOutputs, fuelUsageOutputs) {
   (this.taxes = taxOutputs),
@@ -252,7 +255,7 @@ function taxesPer100Km() {
 }
 
 // Tell Express to listen for requests on port 3000 (starts server)
-app.listen(3000, function() {
+app.listen(port, IP, function() {
   //Logs "Server has started" to the console when server has been started
   console.log("Server has started");
 });
