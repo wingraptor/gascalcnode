@@ -9,7 +9,10 @@
   <div class="container">
     <div class="content  is-size-5 is-size-6-mobile">
       <p>
-        On this page you will find historical fuel prices from July 2017 to July 2018. These are the retail (pump) prices that are
+        On this page you will find historical fuel prices from 
+        <%= moment1.subtract(12,"months").format("MMM") %> <%= moment1.format("YYYY") %> to 
+        <%= moment2.format("MMM") %> <%= moment2.format("YYYY") %>. 
+        These are the retail (pump) prices that are
         set by the Government of Barbados and vary depending on global oil prices.
       </p>
     </div>

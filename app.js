@@ -1,4 +1,4 @@
-var Pretaxprice = require("./models/pretaxprices"),
+var moment = require("moment"),
   bodyParser = require("body-parser"),
   // mongoose = require("mongoose"),
   express = require("express");
@@ -105,7 +105,7 @@ app.get("/gascalc/results", function(req, res) {
 
 //HISTORICAL PRICES PAGE
 app.get("/historical", function(req, res) {
-  res.render("historical");
+  res.render("historical", {moment1:moment(), moment2:moment()});
 });
 
 //FUEL SAVING TIPS PAGE
