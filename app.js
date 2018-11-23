@@ -12,6 +12,8 @@ var app = express();
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
+//Allow favicon to served to website
+app.use("/favicon.ico", express.static("public/favicon.ico"));
 
 var userInputs = [];
 
