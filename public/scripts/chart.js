@@ -19,7 +19,7 @@ var chart1 = new Chart(ctx1, {
       borderColor: '#cb4b16',
       pointBorderColor: "#e4e2ff",
       pointBackgroundColor: "#e4e2ff",
-      pointRadius: 5,
+      pointRadius: 2,
       data: [3.19, 3.27, 3.35, 3.29, 3.44, 3.31,
         3.40, 3.60, 3.96, 3.88, 3.91, 3.89, 3.91
       ],
@@ -51,7 +51,8 @@ var chart1 = new Chart(ctx1, {
           fontSize: "14",
         }
       }]
-    }
+    },
+    responsive: true
   }
 });
 
@@ -70,7 +71,7 @@ var chart2 = new Chart(ctx2, {
       borderColor: '#cb4b16',
       pointBorderColor: "#e4e2ff",
       pointBackgroundColor: "#e4e2ff",
-      pointRadius: 5,
+      pointRadius: 2,
       data: [2.37, 2.52, 2.58, 2.63, 2.60, 2.60,
         2.61, 2.80, 3.21, 3.15, 3.14, 3.20, 3.20
       ],
