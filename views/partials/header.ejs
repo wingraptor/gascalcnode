@@ -51,8 +51,10 @@
         <div class="column column__fuel-widget">
           <div class="div__fuel-widget">
             <div class="content is-size-7">
-              <p>Gas Price: $3.96/L</p>
-              <p>Diesel Price: $2.80/L</p>
+              <p>Gas Price: $
+              <%= currentPetrolFuelRate.toFixed(2) %>/L</p>
+              <p>Diesel Price: $
+              <%= currentDieselFuelRate.toFixed(2) %>/L</p>
             </div>
           </div>
         </div>

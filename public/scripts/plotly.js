@@ -1,3 +1,5 @@
+// No longer using plotly; using chartJS
+
 let graph1 = document.getElementById("gas-prices");
 let graph2 = document.getElementById("diesel-prices");
 
