@@ -88,7 +88,8 @@ app.get("/gascalc/results", function(req, res) {
       yearly: fuelCalculator(yearlyFuelUsage, avgFuelRate),
       monthly: fuelCalculator(monthlyFuelUsage, avgFuelRate),
       currentYearly: fuelCalculator(yearlyFuelUsage, "current"),
-      currentMonthly: fuelCalculator(monthlyFuelUsage, "current")
+      currentMonthly: fuelCalculator(monthlyFuelUsage, "current"),
+      perkm: costperkm()
     },
     fuelUsageOutputs = {
       total: totalFuelUsed(),
@@ -256,6 +257,15 @@ function monthlyFuelTaxes() {
 //Calculates amount paid in taxes per 100km
 function taxesPer100Km() {
   return ((newTaxRate / mileageConverter()) * 100).toFixed(2);
+}
+
+function costperkm(){
+  if (userInputs[0].fuelType === "Gas"){
+    return (app.locals.currentPetrolFuelRate / mileageConverter()).toFixed(2);
+  }
+  else {
+    return (app.locals.currentDieselFuelRate / mileageConverter()).toFixed(2);
+  }
 }
 
 // Tell Express to listen for requests on port 3000 (starts server)
