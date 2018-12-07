@@ -152,7 +152,8 @@ const petrolFuelRate = [
   3.88,
   3.91,
   3.89,
-  3.91
+  3.91,
+  3.71
 ];
 
 const dieselFuelRate = [
@@ -184,7 +185,8 @@ const dieselFuelRate = [
   3.15,
   3.14,
   3.2,
-  3.2
+  3.2,
+  3.17
 ];
 
 // Fuel Rates From Most Recent Month - added as global variable in app so it is accessible in header.ejs
