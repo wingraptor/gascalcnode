@@ -44,13 +44,13 @@ These values represent an estimate of the total costs associated with fuel for a
 
   Again, in general:  
 
-  Average distances travelled per month and year are calculated using the age of the vehicle and the total distance is has travelled during that time frame.  
+  Average distances travelled per month and year are calculated using the age of the vehicle and the total distance it has travelled during that time frame.  
 
 * **Total Usages**: 
 You can get estimates of the amount of fuel used, over the life of the vehicle, per month and per year.  
 
-  Again, in general:  
-  Average distances travelled per month and year are calculated using the age of the vehicle and the total distance is has travelled during that time frame.   
+Again, in general:  
+Average distances travelled per month and year are calculated using the age of the vehicle and the total distance it has travelled during that time frame.   
 
 ## Built With 
 * [Node.js](https://nodejs.org/en/) - Server environment used 
